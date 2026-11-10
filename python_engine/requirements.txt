@@ -1,0 +1,12 @@
+# python_engine/requirements.txt
+# Lista de dependencias para el motor de Python (FastAPI, Scraping y Base de Datos).
+# CAMBIAR ARCHIVO COMPLETO
+
+fastapi
+uvicorn
+psycopg2-binary
+beautifulsoup4
+playwright
+pydantic
+requests
+python-dotenv

@@ -1,0 +1,106 @@
+
+vamos hacer la Aplicacion para ser descagada desde la play store, IOS y computador 
+
+Actúa como un Desarrollador Full-Stack Senior y Analista de Datos Deportivos.
+Tu tarea es desarrollar el código para una aplicación web responsiva (Desktop y Mobile) diseñada para detectar y calcular "Surebets" (Apuestas Seguras o Arbitraje Deportivo) en mercados de Fútbol y Tenis.
+
+1. Stack Tecnológico Requerido:
+
+Frontend: Next.js, React, TypeScript, Tailwind CSS.
+
+Backend/Base de Datos: Funciones Serverless (Next.js API routes), Prisma ORM y Supabase/PostgreSQL.
+
+Scraping/Extracción: Python (BeautifulSoup/Selenium/Playwright) o Node.js (Puppeteer/Cheerio) para extraer cuotas en tiempo real.
+
+2. Integración de Casas de Apuestas:
+El sistema debe estar preparado para procesar feeds de datos u obtener cuotas (odds) decimales de las siguientes casas:
+
+Betplay
+Wplay
+Rushbet
+Betano
+
+3. Lógica Matemática del Motor de Arbitraje:
+El sistema debe escanear los partidos (Ej: Equipo 1 vs Equipo 2) cruzando las cuotas de las diferentes casas.
+Para que el sistema clasifique un cruce como "Oportunidad de Inversión" (Surebet), debe aplicar la siguiente validación:
+
+Probabilidad Implícita (PI): (1 / Cuota Equipo 1) + (1 / Cuota Equipo 2) + (1 / Cuota Empate si aplica)
+
+Condición: Si la suma de las PI es MENOR a 1.0 (100%), existe una Surebet.
+
+4. Módulo de Calculadora de Stakes (Distribución de Inversión):
+Desarrolla un componente UI de calculadora integrado donde el usuario ingrese su "Capital Total a Invertir" y el sistema distribuya los montos exactos para cada casa de apuestas asegurando la misma ganancia neta.Fórmula de distribución a programar:Monto a apostar = Capital Total * (PI de la cuota / Sumatoria de todas las PI)
+
+Caso de Prueba (Debe funcionar exactamente así en la UI):
+
+Partido Tenis / Fútbol (Mercado 2 opciones).
+Casa A (Betano): Cuota E1 = 1.60
+Casa B (Betplay): Cuota E2 = 2.90
+Inversión del usuario: $10,000
+Resultado esperado en UI:
+
+
+Apostar E1 (Casa A): $6,450 -> Retorno: $10,320
+Apostar E2 (Casa B): $3,550 -> Retorno: $10,295
+Ganancia Neta asegurada: ~$295 - $320.
+
+5. Interfaz de Usuario (UI/UX):
+
+Estilo visual minimalista, con tema oscuro (Dark Mode) y acentos en colores neón de alto contraste para resaltar las ganancias y los porcentajes de rentabilidad (+3.04%).
+
+Un "Dashboard de Señales" lateral que muestre la lista de oportunidades detectadas en tiempo real.
+
+Al hacer clic en una señal, debe abrirse la Calculadora mostrando las dos casas implicadas, los equipos y los inputs para ingresar la inversión.
+
+Entregables esperados de esta petición:
+
+La estructura de carpetas del proyecto en Next.js.
+
+El código del componente de la Calculadora de Surebets en React/TypeScript aplicando la fórmula matemática solicitada.
+
+El código de una función mock (datos simulados) que emule la llegada de los datos de Betplay, Wplay, Rushbet y Betano para poder probar la interfaz antes de conectar los scrapers reales.
+
+
+Notas estratégicas para tu desarrollo
+Las casas de apuestas como Rushbet o Betplay tienen sistemas anti-scraping robustos (Cloudflare, reCAPTCHA). Cuando llegues a la fase de extracción de datos, la mejor vía es investigar si tienen APIs públicas no documentadas inspeccionando la pestaña "Red" (Network) en las herramientas de desarrollador de tu navegador mientras cargas sus páginas, en lugar de intentar leer el HTML directamente.
+
+El diseño del prompt incluye explícitamente el uso de "Mock Data" (datos falsos de prueba). Esto es vital para que puedas avanzar con el diseño de tu interfaz y las interacciones 3D que sueles utilizar, sin quedarte bloqueado esperando a que los algoritmos de extracción funcionen al 100%.
+
+
+
+antes de continuar
+
+A partir de este momento, aplicaremos ESTRICTAMENTE las siguientes REGLAS DE TRABAJO:
+
+1. FORMATO DE CÓDIGO: En todos los archivos que me pases para cargar o modificar, la primera línea DEBE ser un comentario con la ruta, el nombre del archivo y su extensión.
+   Ejemplo: //app/admin/ajustes/page.js
+   Inmediatamente debajo, incluye una breve descripción de lo que hace ese archivo.
+   ====================================================================
+2. FLUJO DE MODIFICACIÓN: Para evitar errores, SIEMPRE me pides el archivo que necesitas modificar, yo te lo envío, y después me lo devuelves con los cambios. En caso de requerir scripts de consolidación o automatización, su ruta de salida deberá apuntar a T:\Q\H\Hunter.
+   ====================================================================
+3. ESTADO DEL CÓDIGO: Siempre que me envíes código, debes incluir antes una de estas opciones en LETRA MAYÚSCULA, junto con la ruta exacta:
+   - CAMBIAR ARCHIVO COMPLETO
+   - SOLO PARA VALIDAR
+   - SOLO PARA CONSULTAR
+
+4. DISEÑO Y UI/UX: La página es minimalista. Se debe implementar un botón Sol/Luna en la esquina superior derecha para alternar entre Tema Claro/Oscuro. Los colores y funciones deben estar optimizados para ser extremadamente ágiles.
+5. ACCESO ADMIN OCULTO: En la esquina superior derecha, junto al botón Sol/Luna, debe haber un espacio vacío libre de texto y logos. Si el usuario mantiene el puntero del mouse ahí durante 5 segundos, o hace 5 clics seguidos, aparecerá un ícono de "engranaje" (ajustes). Al hacer clic en este engranaje, se desplegará una ventana modal solicitando usuario y contraseña para ingresar al panel de administración.
+
+6. PANEL DE AJUSTES ADMIN: Una vez logueado, el administrador tendrá un panel donde podrá:
+
+   - Cargar/cambiar videos e imágenes (por URL o subiendo archivos digitales).
+   - Modificar textos del sitio.
+   - Cambiar logos o banners sin tocar el código.
+   - Activar/desactivar y configurar Banners Laterales (izquierda y derecha) para cargar publicidad propia (imágenes o videos por URL/archivo digital).
+   - Modificar las variables del archivo .env desde la interfaz gráfica.
+   ====================================================================
+
+7. CÓDIGOS DE TAREA: Todas mis solicitudes irán con un código de 4 caracteres 
+
+(Ejemplo: LU01, donde 'LU' es Lumen3000 y '01' es el consecutivo). Úsalo en tus respuestas. Yo los marcaré como pendiente (rojo) o terminado (verde).
+
+8. DOCUMENTACIÓN FINAL: Al terminar, debes entregar un archivo HTML con un manual 
+
+de usuario y un manual técnico.
+referiblemente hazlo en Python  
+cn es
