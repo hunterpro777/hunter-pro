@@ -10,7 +10,16 @@ def fetch_rushbet_live_data():
     print("\n[Rushbet] Iniciando extracción de datos...")
     
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+ browser = p.chromium.launch(
+    headless=True,
+    args=[
+        "--no-sandbox",
+        "--disable-dev-shm-usage", # Evita el colapso de 64MB en Render
+        "--disable-gpu",
+        "--single-process"
+    ]
+)
+#       browser = p.chromium.launch(headless=True)
         context = browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
         page = context.new_page()
         page.route("**/*", lambda route: route.abort() if route.request.resource_type in ["image", "stylesheet", "font", "media"] else route.continue_())
