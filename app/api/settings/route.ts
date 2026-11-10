@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const pythonUrl = process.env.PYTHON_ENGINE_URL || 'http://127.0.0.1:8000';
+    const pythonUrl = process.env.PYTHON_ENGINE_URL || 'https://hunter-engine.onrender.com';
     const response = await fetch(`${pythonUrl}/api/settings`, { cache: 'no-store' });
     const data = await response.json();
     return NextResponse.json(data);
@@ -20,7 +20,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const pythonUrl = process.env.PYTHON_ENGINE_URL || 'http://127.0.0.1:8000';
+    const pythonUrl = process.env.PYTHON_ENGINE_URL || 'https://hunter-engine.onrender.com';
     
     const response = await fetch(`${pythonUrl}/api/settings`, {
       method: 'POST',

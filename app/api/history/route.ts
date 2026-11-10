@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const pythonEngineUrl = process.env.PYTHON_ENGINE_URL || 'http://127.0.0.1:8000';
+    const pythonEngineUrl = process.env.PYTHON_ENGINE_URL || 'https://hunter-engine.onrender.com';
     const response = await fetch(`${pythonEngineUrl}/api/surebets/history`, {
       cache: 'no-store'
     });
