@@ -6,10 +6,44 @@ github	@eltiti1
 
 torneoseltiti@gmail.com
 
-
-
 hunterpro745@gmail.com
 P121212..
+
+Github Usuario
+hunterpro777
+repositorio Cazador
+
+
+
+Render.com con tu cuenta de github
+
+==========================
+inicializar Github
+
+git init
+git add .
+git commit -m "Hunter Pro - Sistema Base Terminado"
+
+
+
+
+
+…or create a new repository on the command line
+echo "# hunter-pro" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/hunterpro777/hunter-pro.git
+git push -u origin main
+
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/hunterpro777/hunter-pro.git
+git branch -M main
+git push -u origin main
+
+
 
 
 
