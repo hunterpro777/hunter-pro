@@ -10,7 +10,7 @@ def fetch_rushbet_live_data():
     print("\n[Rushbet] Iniciando extracción de datos...")
     
     with sync_playwright() as p:
- browser = p.chromium.launch(
+browser = p.chromium.launch(
     headless=True,
     args=[
         "--no-sandbox",
