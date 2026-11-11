@@ -99,7 +99,7 @@ def get_live_surebets():
       #  f_betano = executor.submit(fetch_betano_live_data)
         
     #    results = [f_wplay.result(), f_betplay.result(), f_rushbet.result(), f_betano.result()]
-     results = [f_rushbet.result()]
+         results = [f_rushbet.result()]
     
     valid_data = [res for res in results if res is not None]
     
