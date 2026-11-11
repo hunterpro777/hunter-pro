@@ -93,10 +93,10 @@ class OddsSignal(BaseModel):
 @app.get("/api/surebets/live", response_model=List[OddsSignal])
 def get_live_surebets():
     with ThreadPoolExecutor(max_workers=4) as executor:
-        f_wplay = executor.submit(fetch_wplay_live_data)
-        f_betplay = executor.submit(fetch_betplay_live_data)
+      #  f_wplay = executor.submit(fetch_wplay_live_data)
+      #  f_betplay = executor.submit(fetch_betplay_live_data)
         f_rushbet = executor.submit(fetch_rushbet_live_data)
-        f_betano = executor.submit(fetch_betano_live_data)
+      #  f_betano = executor.submit(fetch_betano_live_data)
         
         results = [f_wplay.result(), f_betplay.result(), f_rushbet.result(), f_betano.result()]
     
