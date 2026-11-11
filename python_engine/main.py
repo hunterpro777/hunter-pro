@@ -13,10 +13,10 @@ import random
 import requests
 import threading
 
-from scrapers.wplay import fetch_wplay_live_data
-from scrapers.betplay import fetch_betplay_live_data
+#from scrapers.wplay import fetch_wplay_live_data
+#from scrapers.betplay import fetch_betplay_live_data
 from scrapers.rushbet import fetch_rushbet_live_data
-from scrapers.betano import fetch_betano_live_data
+#from scrapers.betano import fetch_betano_live_data
 from db.database import init_db, save_surebet, get_settings, update_settings, DB_PATH
 
 # ================= CONFIGURACIÓN DE TELEGRAM =================
