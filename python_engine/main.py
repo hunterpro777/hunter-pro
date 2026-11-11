@@ -1,19 +1,7 @@
 # python_engine/main.py
 # Servidor FastAPI usando hilos para ejecutar scrapers de Wplay y Betplay y cruzar datos.
 # ====================================================================
-# Servidor FastAPI con integración de Base de Datos para persistencia de señales.
-# ====================================================================
-# Servidor FastAPI optimizado con ejecución concurrente de scrapers y endpoint de historial.
-# ====================================================================
-# Motor combinatorio para 4 casas de apuestas con ejecución concurrente.
-# ====================================================================
-# Motor combinatorio con endpoints de Historial y Configuraciones.
-# ====================================================================
-# Motor Combinatorio con Sistema de Simulación Dinámica (Fallback Inteligente)
-# ====================================================================
-# Motor Combinatorio con Sistema de Simulación y Alertas de Telegram
-# ====================================================================
-
+# python_engine/main.py
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -32,12 +20,9 @@ from scrapers.betano import fetch_betano_live_data
 from db.database import init_db, save_surebet, get_settings, update_settings, DB_PATH
 
 # ================= CONFIGURACIÓN DE TELEGRAM =================
-# REEMPLAZA ESTOS VALORES CON LOS DE TU BOT
 TELEGRAM_BOT_TOKEN = "9163369560:AAF86PeR2JBGn0o3mRBxIunHLiyfxOfuMt4"
 TELEGRAM_CHAT_ID = "8409103164"
-#   id	8409103164
-
-ALERT_THRESHOLD = 15.0  # Solo avisa si la rentabilidad supera el 15%
+ALERT_THRESHOLD = 15.0
 
 def send_telegram_alert(match_name, bm1, odds1, bm2, odds2, profit):
     if not TELEGRAM_BOT_TOKEN or TELEGRAM_BOT_TOKEN == "TU_TOKEN_AQUI":
@@ -61,7 +46,6 @@ def send_telegram_alert(match_name, bm1, odds1, bm2, odds2, profit):
     
     try:
         requests.post(url, json=payload, timeout=5)
-        print(f"📲 [Telegram] Alerta enviada para {match_name} (+{profit:.2f}%)")
     except Exception as e:
         print(f"❌ [Telegram] Error al enviar alerta: {e}")
 # =============================================================
@@ -93,38 +77,17 @@ class OddsSignal(BaseModel):
 @app.get("/api/surebets/live", response_model=List[OddsSignal])
 def get_live_surebets():
     with ThreadPoolExecutor(max_workers=4) as executor:
-      #  f_wplay = executor.submit(fetch_wplay_live_data)
-      #  f_betplay = executor.submit(fetch_betplay_live_data)
-      f_rushbet = executor.submit(fetch_rushbet_live_data)
-      #  f_betano = executor.submit(fetch_betano_live_data)
+        # Dejamos SOLO Rushbet encendido
+        f_rushbet = executor.submit(fetch_rushbet_live_data)
         
-      #    results = [f_wplay.result(), f_betplay.result(), f_rushbet.result(), f_betano.result()]
-      results = [f_rushbet.result()]
+        # SOLO recolectamos Rushbet
+        results = [f_rushbet.result()]
     
     valid_data = [res for res in results if res is not None]
     
     if len(valid_data) < 2:
-        print("🔄 [Motor] Activando Simulación Dinámica de Alta Frecuencia...")
+        print("🔄 [Motor] No hay datos suficientes para cruzar.")
         valid_data = []
-        bookmakers = ["Wplay", "Betplay", "Rushbet", "Betano"]
-        matches = [
-            ("Arsenal", "Chelsea", "Premier League"),
-            ("Real Madrid", "Barcelona", "La Liga"),
-            ("Lakers", "Warriors", "NBA"),
-            ("Djokovic", "Alcaraz", "ATP Tour")
-        ]
-        active_matches = random.sample(matches, 2)
-        
-        for t1, t2, market in active_matches:
-            for bm in bookmakers:
-                valid_data.append({
-                    "bookmaker": bm,
-                    "team_1": f"{t1} (Live)",
-                    "odds_1": round(random.uniform(1.60, 3.50), 2),
-                    "team_2": f"{t2} (Live)",
-                    "odds_2": round(random.uniform(1.60, 3.50), 2),
-                    "market_override": market
-                })
 
     signals = []
     
@@ -143,7 +106,6 @@ def get_live_surebets():
                     profit = ((1 / pi_A) - 1) * 100
                     save_surebet(match_name, bm1['bookmaker'], bm1['odds_1'], bm2['bookmaker'], bm2['odds_2'])
                     
-                    # Disparar alerta de Telegram si supera el umbral
                     if profit >= ALERT_THRESHOLD:
                         threading.Thread(target=send_telegram_alert, args=(match_name, bm1['bookmaker'], bm1['odds_1'], bm2['bookmaker'], bm2['odds_2'], profit)).start()
                         
